@@ -1,144 +1,145 @@
-package ro.ase.cts.lab02;
-
 import java.util.ArrayList;
 
 public class Main {
 
     public static void main(String[] args) {
 	// write your code here
-        OShop o = new OShop("Emag", "logo.jpg", new ArrayList<Prod>());
+        OnlineShop onlineShop = new OnlineShop("Emag", "logo.jpg", new ArrayList<Product>());
 
-        Prod p1 = new Prod("Laptop", 3200.5, 1,1, 1123, "");
-        Prod p2 = new Prod("Frigider", 207.95, 1,2, 1245, "");
+        Product p1 = new Product("Laptop", 3200.5, 1,1, 1123, "");
+        Product p2 = new Product("Frigider", 207.95, 1,2, 1245, "");
 
-        Prod p3 = new Prod(p1);
+        Product p3 = new Product(p1);
 
         p3.setQty(5);
-        p3.setProdName("Paine");
+        p3.setName("Paine");
 
-        o.modifyProductsList(1,p1);
-        o.modifyProductsList(1,p2);
+        onlineShop.Add(p1);
+        onlineShop.Add(p2);
 
-        o.modifyProductsList(2, p1);
-        System.out.println(p1.equals(p2));
+        onlineShop.Substract(p1);
+        System.out.println(p1.ProductsAreEquals(p2));
     }
 }
 
-class OShop {
-    private String onlineShopName;
-    private String i;
-    private ArrayList<Prod> products;
+class OnlineShop {
+    private String name;
+    private String img;
+    private ArrayList<Product> products;
 
-    OShop(String name, String img, ArrayList<Prod> products)
+    OnlineShop(String name, String img, ArrayList<Product> products)
     {
-        this.products = new ArrayList<Prod>();
-        this.i = img;
-        this.onlineShopName = name;
+        this.products = new ArrayList<Product>();
+        this.img = img;
+        this.Name = name;
     }
 
-    public void modifyProductsList(int what, Prod p)
+    public void Add(Product p)
     {
-        if(what == 1)
-        {
             this.products.add(p);
-        }
-        else
+    }
+    
+    public void Substract(Product p)
+    {
             this.products.remove(p);
     }
 
-    public String getOnlineShopName() {
-        return onlineShopName;
+    public String getName() {
+        return name;
     }
 
-    public void setOnlineShopName(String onlineShopName) {
-        this.onlineShopName = onlineShopName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getI() {
-        return i;
+    public String getImg() {
+        return img;
     }
 
     public void setImg(String img) {
-        this.i = img;
+        this.img = img;
     }
 }
 
-class Prod
+
+class Product
 {
-    private int prodId;
-    private String prodName;
-    private double productPrice;
-    private int productType;
-    private int productCategory;
+    private int id;
+    private String name;
+    private double price;
+    private int type;
+    private int category;
     private int qty;
     private String exp; //expiry date - only for goods
     private String details; // ex.: processor, memory, power, volume (for refrigerators etc)
 
-    public Prod(String n, double p, int pt, int pc, int id, String exp)
+    public Product(String name, double price, int type, int category, int id, String exp)
     {
-        prodName = n;
-        productPrice = p;
-        productType = pt;
-        productCategory = pc;
-        this.prodId = id;
+        this.name = name;
+        this.price = price;
+        this.type = type;
+        this.category = category;
+        this.id = id;
         this.exp = exp;
     }
 
-    public Prod(Prod p)
+    public Product(Product p)
     {
-        this.prodName = p.prodName;
-        this.productPrice = p.productPrice;
-        this.productType = p.productType;
-        this.productCategory = p.productCategory;
-        this.prodId = p.prodId;
+        this.name = p.name;
+        this.price = p.price;
+        this.type = p.type;
+        this.category = p.category;
+        this.id = p.id;
     }
 
-    public double getProductPrice() {
-        return productPrice;
+    public double getPrice() {
+        return price;
     }
 
-    public void setProductPrice(double productPrice) {
-        this.productPrice = productPrice;
+    public void setPrice(double price) {
+        this.price = price;
     }
 
-    public String getProdName() {
-        return prodName;
+    public String getName() {
+        return name;
     }
 
-    public void setProdName(String prodName) {
-        this.prodName = prodName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public int getProductType() {
-        return productType;
+    public int getType() {
+        return type;
     }
 
-    public void setProductType(int productType) {
-        this.productType = productType;
+    public void setType(int type) {
+        this.type = type;
     }
 
-    public boolean equals(Prod p)
+    public boolean ProductsAreEquals(Product p)
     {
-        if(p.prodId != this.prodId)
+        if(p.id != this.id)
             return false;
-        if(!p.prodName.equals(this.prodName))
+        if(!p.name.equals(this.name))
             return false;
-        if(p.productPrice != this.productPrice)
+        if(p.price != this.price)
             return false;
-        if(p.productType != p.productType)
+        if(p.type != this.type)
             return false;
-        if(p.productCategory != this.productCategory)
+        if(p.category != this.category)
             return false;
 
         return true;
     }
 
-    public void modify(boolean flag, double val)
+    public void Add(double val)
     {
-        if(flag)
-            this.productPrice+=this.productPrice*val;
-        if(!flag)
-            this.productPrice-=this.productPrice*val/100;
+            this.price+=this.price*val;
+    }
+
+    public void Substract(double val)
+    {
+            this.price-=this.price*val/100;
     }
 
     public int getQty() {
@@ -149,12 +150,12 @@ class Prod
         this.qty = qty;
     }
 
-    public int getProdId() {
-        return prodId;
+    public int getId() {
+        return id;
     }
 
-    public void setProdId(int prodId) {
-        this.prodId = prodId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getDetails() {
@@ -168,50 +169,43 @@ class Prod
 
 class User
 {
-    private String usn;
+    private String user;
     private String userId;
-    private ArrayList<Order> o;
-    private ArrayList<Order> c;
+    private ArrayList<Order> order;
 
-    public User(String usn, String userId)
+    public User(String user, String userId)
     {
-        this.usn = usn;
+        this.user = user;
         this.userId = userId;
-        o=new ArrayList<Order>();
-        c=new ArrayList<Order>();
+        order=new ArrayList<Order>();
     }
 
-    public void addO1(Order o)
+    public void AddToOrder(Order order)
     {
-        this.o.add(o);
-    }
-
-    public void addO2(Order o)
-    {
-        this.c.add(o);
+        this.order.add(order);
     }
 }
 
 class Order
 {
-    private ArrayList<Prod> l;
+    private ArrayList<Product> list;
     private String addr;
 
     public Order()
     {
-        l = new ArrayList<Prod>();
+        list = new ArrayList<Product>();
     }
-    public void add(Prod p)
+    public void Add(Product p)
     {
-        if(l.size() > 99)
+        if(list.size() > 99)
             return;
 
-        l.add(p);
+        list.add(p);
     }
 
-    public void remove(Prod p)
+    public void Remove(Product p)
     {
-        l.remove(p);
+        list.remove(p);
     }
 
     public String getAddr() {
@@ -221,33 +215,8 @@ class Order
     public void setAddr(String addr) {
         this.addr = addr;
     }
-}
-
-class InventoryP
-{
-    private Prod p;
-    private int q;
-
-    public InventoryP(Prod p, int q)
-    {
-        this.p = new Prod(p);
-        this.q = q;
-    }
-    public Prod getP() {
-        return p;
-    }
-
-    public void setP(Prod p) {
-        this.p = p;
-    }
-
-    public int getQ() {
-        return q;
-    }
-
-    public void setQ(int q) {
-        this.q = q;
-    }
+    
+//We already have a variable that tracks quantity in the "Product" class so this last class is not needed
 }
 
 
